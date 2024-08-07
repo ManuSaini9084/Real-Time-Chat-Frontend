@@ -107,6 +107,7 @@ const FormContainer = styled.div`
     align-items: center;
     gap: 1rem;
     justify-content: center;
+    margin-right:30px;
     img {
       height: 5rem;
     }
