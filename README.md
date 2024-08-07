@@ -1,5 +1,4 @@
 # Web Chat Application
-
 ## Objective
 - To create a web chat application based on Socket.io/WebSocket/WebRTC.
 - The application should be built using either the MERN or MEAN stack.
@@ -26,14 +25,12 @@
 
 ## Installation
 
-### Backend
+### Frontend
 1. Clone the repository:
    ```sh
    git clone https://github.com/yourusername/web-chat-app.git
    cd web-chat-app
    npm install
    npm start
-### Frontend
-   cd web-chat-app
-   npm install
-   npm start
+
+
