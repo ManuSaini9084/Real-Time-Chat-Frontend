@@ -13,9 +13,10 @@
 - **Load Previous Messages:** The user should be able to load previous chat messages.
 
 ## Bonus Points
+- **Search Contacts:** I have also include search contacts in my chat app by filtering contacts username.
+- **Edit and Delete Messages:** Implementing features to delete and edit messages will earn additional points.
 - **Efficiency:** More points will be awarded if the code demonstrates better time-space complexity.
 - **Coding Standards:** Plus points for following good naming conventions, abstraction, and SOLID principles.
-- **Edit and Delete Messages:** Implementing features to delete and edit messages will earn additional points.
 - **Message Delivery Status:** Implementing a feature to indicate if the recipient has read the message will also earn extra points.
 
 ## Technologies Used
