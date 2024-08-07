@@ -6,47 +6,67 @@ export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-  useEffect(async () => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
-    setCurrentUserName(data.username);
-    setCurrentUserImage(data.avatarImage);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search input
+  const [filteredContacts, setFilteredContacts] = useState(contacts);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await JSON.parse(
+        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      );
+      setCurrentUserName(data.username);
+      setCurrentUserImage(data.avatarImage);
+    };
+    fetchUserData();
   }, []);
+
+  useEffect(() => {
+    setFilteredContacts(
+      contacts.filter((contact) =>
+        contact.username.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, contacts]);
+
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
+
   return (
     <>
-      {currentUserImage && currentUserImage && (
+      {currentUserImage && currentUserName && (
         <Container>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h3>snappy</h3>
+            <h3>Chat Karo</h3>
+          </div>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search contacts..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
           <div className="contacts">
-            {contacts.map((contact, index) => {
-              return (
-                <div
-                  key={contact._id}
-                  className={`contact ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
-                  onClick={() => changeCurrentChat(index, contact)}
-                >
-                  <div className="avatar">
-                    <img
-                      src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                      alt=""
-                    />
-                  </div>
-                  <div className="username">
-                    <h3>{contact.username}</h3>
-                  </div>
+            {filteredContacts.map((contact, index) => (
+              <div
+                key={contact._id}
+                className={`contact ${index === currentSelected ? "selected" : ""}`}
+                onClick={() => changeCurrentChat(index, contact)}
+              >
+                <div className="avatar">
+                  <img
+                    src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                    alt=""
+                  />
                 </div>
-              );
-            })}
+                <div className="username">
+                  <h3>{contact.username}</h3>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="current-user">
             <div className="avatar">
@@ -66,10 +86,13 @@ export default function Contacts({ contacts, changeChat }) {
 }
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: auto auto 1fr auto;
   overflow: hidden;
   background-color: #080420;
+
   .brand {
+  margin-top:10px;
+  padding:5px;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -82,12 +105,37 @@ const Container = styled.div`
       text-transform: uppercase;
     }
   }
+
+   .search-bar {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    input {
+      width: 90%;
+      padding: 10px;
+      border-radius: 0.3rem;
+      border: 1px solid #ffffff34;
+      background-color: #ffffff1a;
+      color: white;
+      outline: none;
+      font-size: 1rem;
+      &::placeholder {
+        color: white;
+      }
+      &:focus {
+        border-color: #9a86f3; /* Color of the outline */
+        box-shadow: 0 0 0 2px rgba(154, 134, 243, 0.5); /* Outline effect */
+      }
+    }
+  }
+
   .contacts {
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: auto;
     gap: 0.8rem;
+    padding: 0 1rem;
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -100,7 +148,8 @@ const Container = styled.div`
       background-color: #ffffff34;
       min-height: 5rem;
       cursor: pointer;
-      width: 90%;
+      width: 100%;
+      max-width: 500px; /* You can adjust this value based on your design */
       border-radius: 0.2rem;
       padding: 0.4rem;
       display: flex;
@@ -129,6 +178,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    padding: 10px;
     .avatar {
       img {
         height: 4rem;

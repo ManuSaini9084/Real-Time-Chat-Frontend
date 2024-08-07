@@ -65,12 +65,14 @@ const Container = styled.div`
     gap: 1rem;
     .emoji {
       position: relative;
+      
       svg {
         font-size: 1.5rem;
         color: #ffff00c8;
         cursor: pointer;
       }
       .emoji-picker-react {
+      
         position: absolute;
         top: -350px;
         background-color: #080420;
@@ -99,6 +101,7 @@ const Container = styled.div`
     }
   }
   .input-container {
+  margin-bottom:5px;
     width: 100%;
     border-radius: 2rem;
     display: flex;

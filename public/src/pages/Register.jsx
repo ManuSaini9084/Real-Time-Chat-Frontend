@@ -70,7 +70,7 @@ export default function Register() {
         email,
         password,
       });
-
+ 
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
@@ -125,7 +125,7 @@ export default function Register() {
       <ToastContainer />
     </>
   );
-}
+  }
 
 const FormContainer = styled.div`
   height: 100vh;
